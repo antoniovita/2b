@@ -1,42 +1,32 @@
-// src/database/repositories/userRepository.ts
 import { getDb } from '../index';
 import { User } from '../../entities/User';
 import { v4 as uuidv4 } from 'uuid';
 
-export const insertUser = (user: Omit<User, 'id'>): Promise<User> => {
-  return new Promise((resolve, reject) => {
-    const db = getDb();
-    const id = uuidv4();
+export const insertUser = async (user: Omit<User, 'id'>): Promise<User> => {
+  const db = getDb();
+  const id = uuidv4();
 
-    db.transaction((tx) => {
-      tx.executeSql(
-        'INSERT INTO user (id, name) VALUES (?, ?)',
-        [id, user.name],
-        () => resolve({ id, ...user }),
-        (_, error) => {
-          console.error('Erro ao inserir usuário:', error);
-          reject(error);
-          return true;
-        }
-      );
-    });
-  });
+  const safeName = user.name.replace(/'/g, "''");
+
+  try {
+    await db.execAsync(
+      `INSERT INTO user (id, name) VALUES ('${id}', '${safeName}')`
+    );
+    return { id, ...user };
+  } catch (error) {
+    console.error('Erro ao inserir usuário:', error);
+    throw error;
+  }
 };
 
-export const getAllUsers = (): Promise<User[]> => {
-  return new Promise((resolve, reject) => {
-    const db = getDb();
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT * FROM user',
-        [],
-        (_, { rows }) => resolve(rows._array),
-        (_, error) => {
-          console.error('Erro ao buscar usuários:', error);
-          reject(error);
-          return true;
-        }
-      );
-    });
-  });
+export const getAllUsers = async (): Promise<User[]> => {
+  const db = getDb();
+
+  try {
+    const result = await db.getAllAsync<User>('SELECT * FROM user');
+    return result;
+  } catch (error) {
+    console.error('Erro ao buscar usuários:', error);
+    throw error;
+  }
 };
