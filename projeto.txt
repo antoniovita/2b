@@ -1,0 +1,4 @@
+User	createUser, listUsers	
+Routine	createRoutine, listRoutinesByUser	
+Task	createTask, listTasksByUser	
+Goal	createGoal, listGoalsByUser

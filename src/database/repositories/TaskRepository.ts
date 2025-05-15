@@ -1,6 +1,6 @@
 // src/database/repositories/taskRepository.ts
 import { getDb } from '../index';
-import { Task } from '../../entities/Task';
+import { Task } from '../entities/Task';
 import { v4 as uuidv4 } from 'uuid';
 
 export const insertTask = async (task: Omit<Task, 'id'>): Promise<Task> => {
