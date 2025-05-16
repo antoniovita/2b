@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import { initDatabase } from './src/database';
 
 
-
 import ChatScreen from './src/screens/ChatScreen';
 import AgendaScreen from './src/screens/AgendaScreen';
 
@@ -14,16 +13,9 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-  useEffect(() => {
-    (async () => {
-      try {
-        await initDatabase();
-        console.log('📦 Banco de dados iniciado com sucesso.');
-      } catch (err) {
-        console.error('❌ Erro ao iniciar banco de dados:', err);
-      }
-    })();
-  }, []);
+    useEffect(() => {
+      initDatabase();
+    }, []);
 
   return (
     <NavigationContainer>

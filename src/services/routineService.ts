@@ -1,4 +1,4 @@
-import { Routine } from '../database/entities/Routine';
+import { Routine } from '../entities/Routine';
 import * as routineRepo from '../database/repositories/RoutineRepository';
 
 export const createRoutine = async (

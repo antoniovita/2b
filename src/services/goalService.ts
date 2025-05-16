@@ -1,4 +1,4 @@
-import { Goal } from '../database/entities/Goal';
+import { Goal } from '../entities/Goal';
 import * as goalRepo from '../database/repositories/GoalRepository';
 
 export const createGoal = async (

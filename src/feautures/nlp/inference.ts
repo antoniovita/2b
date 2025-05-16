@@ -14,15 +14,9 @@ export const loadModel = async () => {
 
   const destPath = `${RNFS.TemporaryDirectoryPath}/model_fp16.onnx`;
 
-  try {
-    await RNFS.copyFileAssets(modelPath, destPath);
-    session = await InferenceSession.create(destPath);
-    console.log('✅ Modelo ONNX carregado com sucesso!');
-    return session;
-  } catch (err) {
-    console.error('❌ Erro ao carregar modelo ONNX:', err);
-    throw err;
-  }
+  await RNFS.copyFileAssets(modelPath, destPath);
+  session = await InferenceSession.create(destPath);
+  return session;
 };
 
 export const runModel = async ({
@@ -33,17 +27,6 @@ export const runModel = async ({
   attention_mask: Tensor;
 }) => {
   if (!session) await loadModel();
-
-  const feeds: Record<string, Tensor> = {
-    input_ids,
-    attention_mask,
-  };
-
-  try {
-    const results = await session!.run(feeds);
-    return results;
-  } catch (err) {
-    console.error('❌ Erro ao rodar modelo:', err);
-    throw err;
-  }
+  const outputs = await session!.run({ input_ids, attention_mask });
+  return outputs;
 };

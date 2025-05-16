@@ -1,4 +1,4 @@
-import { User } from '../database/entities/User'
+import { User } from '../entities/User'
 import * as userRepo from '../database/repositories/UserRepository';
 
 export const createUser = async (name: string): Promise<User> => {

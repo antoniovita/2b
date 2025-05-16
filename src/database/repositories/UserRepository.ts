@@ -1,5 +1,5 @@
 import { getDb } from '../index';
-import { User } from '../entities/User';
+import { User } from '../../entities/User';
 import { v4 as uuidv4 } from 'uuid';
 
 export const insertUser = async (user: Omit<User, 'id'>): Promise<User> => {

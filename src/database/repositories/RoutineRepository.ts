@@ -1,6 +1,6 @@
 // src/database/repositories/routineRepository.ts
 import { getDb } from '../index';
-import { Routine } from '../entities/Routine';
+import { Routine } from '../../entities/Routine';
 import { v4 as uuidv4 } from 'uuid';
 
 export const insertRoutine = async (

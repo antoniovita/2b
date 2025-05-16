@@ -1,4 +1,4 @@
-import { Task } from '../database/entities/Task';
+import { Task } from '../entities/Task';
 import * as taskRepo from '../database/repositories/TaskRepository';
 
 export const createTask = async (
